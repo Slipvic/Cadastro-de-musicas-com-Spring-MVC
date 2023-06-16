@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listagem de Músicas</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #f8f9fa; /* Define a cor de fundo para as linhas ímpares */
+    }
+    .table th {
+      background-color: black; /* Define a cor de fundo para as células do cabeçalho */
+      color: white; /* Define a cor do texto dentro das células do cabeçalho como branco */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Listagem de Músicas</h1>
+    
+    <div class="mt-4">
+      <h4>Músicas Cadastradas:</h4>
+      <table id="musicList" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Artista</th>
+            <th>Ano de Lançamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="listar: ${repository}">
+            <td th:text="${listar.titulo}"></td>
+            <td th:text="${listar.artista}"></td>
+            <td th:text="${listar.anoL}"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p id="emptyMessage" class="text-muted mt-2">Não há músicas cadastradas.</p>
+    </div>
+    
+    <button id="newMusicButton" class="btn btn-success mt-4">Incluir Novo</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var musicList = document.getElementById("musicList");
+      var emptyMessage = document.getElementById("emptyMessage");
+
+      if (musicList.rows.length === 1) {
+        musicList.style.display = "none";  // Oculta a tabela se estiver vazia
+        emptyMessage.style.display = "block";  // Exibe a mensagem de lista vazia
+      } else {
+        musicList.style.display = "table";  // Exibe a tabela se houver músicas cadastradas
+        emptyMessage.style.display = "none";  // Oculta a mensagem de lista vazia
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var newMusicButton = document.getElementById("newMusicButton");
+
+      newMusicButton.addEventListener("click", function() {
+        window.location.href = "/musicas/novo";  
+      });
+    });
+  </script>
+</body>
+</html>
